@@ -299,10 +299,10 @@ export default {
     // text-transform: capitalize;
 
     line-height: 1.1;
-    margin-bottom: 4px;
-    margin-left: 2px;
+    margin-bottom: 1px;
+    margin-left: 1px;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 13px;
     color: $label-light;
   }
 
@@ -314,7 +314,7 @@ export default {
   .input,
   .textarea {
     outline: none;
-    background-color: $white;
+    background-color: $white-soft;
     border: $global-border-size solid transparent;
     color: $black;
 
@@ -370,7 +370,7 @@ export default {
 
   .input {
     &.sm {
-      height: 34px;
+      height: 36px;
       font-size: 13px;
     }
 

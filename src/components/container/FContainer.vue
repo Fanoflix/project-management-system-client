@@ -218,6 +218,10 @@ const cssProps = computed(() => {
     .empty {
       color: $text-mute-dark;
     }
+
+    &.transparent {
+    background-color: transparent;
+  }
   }
 }
 </style>

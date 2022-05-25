@@ -8,79 +8,85 @@
         <FInput
           type="email"
           label="Email"
+          v-model="email"
           placeholder="user@email.com"
           required
           minlength="3"
-          size="md"
           validation-message="Email should be of correct format."
           success-message="Valid!"
-          rounded
+          ref="loginFirstInputRef"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
         />
         <FInput
           type="password"
-          minlength="3"
           label="Password"
-          rounded
+          v-model="password"
+          minlength="3"
           required
-          size="md"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
         />
       </div>
       <div class="buttons">
-        <FButton label="Login" size="md" outlined rounded />
+        <FButton
+          label="Login"
+          :type="formConfig.buttonType"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
+          :outlined="formConfig.buttonOutlined"
+          @click.prevent="submit"
+        />
       </div>
     </form>
   </section>
 </template>
 
 <script setup>
-import { useThemeStore } from "../stores/theme.js";
-import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { useUserStore } from "@/stores/user.js";
+import { onMounted, ref } from "vue";
+import formConfig from "@/utils/formConfig.js";
+import { useRouter } from "vue-router";
+import processRequest from "@/utils/processRequest.js";
 import FButton from "../components/button/FButton.vue";
 import FInput from "../components/input/FInput.vue";
 
-const themeStore = useThemeStore();
-const { isDark } = storeToRefs(themeStore);
+const loginFirstInputRef = ref(null);
+const email = ref("");
+const password = ref("");
 
+const { setUserInfo } = useUserStore();
+const router = useRouter();
+
+function submit() {
+  processRequest("auth/login", "post", {
+    email: email.value,
+    password: password.value,
+  })
+    .then((res) => {
+      console.log(res.data);
+      setUserInfo({ ...res.data.user, token: res.data.token });
+      router.push("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+// Lifecycle Hooks
 onMounted(() => {
-  console.log("Login mounted");
+  loginFirstInputRef.value.input.focus();
 });
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
+@import "@/assets/form-styling.scss";
 .login {
-  // margin-top: 15px;
-  // padding: 15px;
-
   width: $global-center-content-width;
 
   display: flex;
   align-items: center;
   flex-direction: column;
-  
-  form {
-    width: 100%;
-    .inputs {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      flex-flow: nowrap column;
-
-      .control {
-        margin: 10px 0px;
-      }
-    }
-
-    .buttons {
-      margin-top: 10px;
-      display: flex;
-      flex-flow: nowrap column;
-
-      button {
-        margin: 2px 0px;
-      }
-    }
-  }
+  @include form-styling;
 }
 </style>

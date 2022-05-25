@@ -1,0 +1,25 @@
+@mixin form-styling {
+  form {
+    width: 100%;
+    .inputs {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      flex-flow: nowrap column;
+
+      .control {
+        margin: 8px 0px;
+      }
+    }
+
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      flex-flow: nowrap column;
+
+      button {
+        margin: 15px 0px;
+      }
+    }
+  }
+}

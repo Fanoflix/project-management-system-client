@@ -3,14 +3,14 @@
     <!-- Work items side info -->
     <div class="left">
       <InfoCard
-        :updates="updates"
-        emptyText="No recent updates!"
-        heading="Updates"
+        :importantAnnouncements="importantAnnouncements"
+        emptyText="Important announcements will be shown here."
+        heading="Important"
       />
     </div>
 
     <div class="center">
-      <GroupFeed></GroupFeed>
+      <GroupFeed :projectId="$route.params.id"></GroupFeed>
     </div>
 
     <div class="right">
@@ -27,44 +27,46 @@
 import GroupFeed from "@/components/feed/GroupFeed.vue";
 import FContainer from "@/components/container/FContainer.vue";
 import InfoCard from "@/components/infocard/InfoCard.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+console.log(route.params);
 
 const tasks = [
   {
     id: 1,
     author: "Abdul Rehman",
     topic: "Fix navbar",
-    createdAt: "2020-01-01",
+    status: "backlog",
+    createdAt: new Date(),
+    description: "Fix the navbar",
+  },
+  {
+    id: 1,
+    author: "Abdul Rehman",
+    topic: "E2E test jinx",
+    status: "under review",
+    createdAt: new Date(),
+    description:
+      "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+  },
+  {
+    id: 1,
+    author: "Abdul Rehman",
+    topic: "Make routing in pkamps",
+    status: "approved",
+    createdAt: new Date(),
     description: "Fix that shit",
   },
   {
     id: 1,
     author: "Abdul Rehman",
     topic: "Fix navbar",
-    createdAt: "2020-01-01",
-    description:
-      "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+    status: "approved",
+    createdAt: new Date(),
+    description: "Complete the cycle of fixing the navbar",
   },
-  // {
-  //   id: 1,
-  //   author: "Abdul Rehman",
-  //   topic: "Fix navbar",
-  //   createdAt: "2020-01-01",
-  //   description: "Fix that shit",
-  // },
-  // {
-  //   id: 1,
-  //   author: "Abdul Rehman",
-  //   topic: "Fix navbar",
-  //   createdAt: "2020-01-01",
-  //   description: "Fix that shit",
-  // },
-  // {
-  //   id: 1,
-  //   author: "Abdul Rehman",
-  //   topic: "Fix navbar",
-  //   createdAt: "2020-01-01",
-  //   description: "Fix that shit",
-  // },
 ];
 </script>
 

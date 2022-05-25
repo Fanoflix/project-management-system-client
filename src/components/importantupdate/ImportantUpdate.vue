@@ -1,18 +1,19 @@
 <template>
-  <FContainer rounded :class="{ dark: isDark }">
-    <h4 class="post-topic">
-      {{ post.topic }}
-    </h4>
+  <FContainer filled :class="{ dark: isDark }" rounded>
+    <h5>
+      {{ task.topic }}
+    </h5>
     <p class="timestamp">
-      <strong>{{ post.author }} </strong>
+      <strong>{{ task.author }}</strong>
       &nbsp; | &nbsp;
-      {{ convertDateTime(post.createdAt) }}
+      {{ convertDateTime(task.createdAt) }}
     </p>
 
-    <p class="content">
-      {{ post.content }}
+    <p>
+      {{ task.description }}
     </p>
 
+    <!-- maybe remove later? -->
     <div class="attached-item">
       <slot name="attached-item"></slot>
     </div>
@@ -33,7 +34,7 @@ const { isDark } = storeToRefs(themeStore);
 const attrs = useAttrs();
 
 const props = defineProps({
-  post: {
+  task: {
     type: Object,
     required: true,
   },
@@ -42,13 +43,25 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 @import "@/assets/variables.scss";
-@import "@/assets/timestamp-styling.scss";
-@include timestamp-styling;
-.post-topic {
-  font-weight: 600;
+.timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-top: 10px;
+  line-height: 0.4;
+  margin-bottom: $post-margin-btm;
 }
 
-.content {
-  margin-top: 10px;
+.f-container {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(225, 225, 225) !important;
+  }
+
+  &.dark {
+    &:hover {
+      background-color: rgb(51, 51, 51) !important;
+    }
+  }
 }
 </style>

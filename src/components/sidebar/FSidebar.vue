@@ -1,21 +1,20 @@
 <template>
   <section ref="sidebar" class="side-bar" :class="sidebarClasses">
-    <FLink type="secondary" to="/buttonShowcase"> Buttons </FLink>
-
-    <FLink type="secondary" to="/inputShowcase"> Inputs </FLink>
+    <FLink type="secondary" @click.prevent="changeTheme"> Switch Theme </FLink>
   </section>
 </template>
 
 <script setup>
-/*
-  TODO Make Sidebar retractable
-*/
-
 // Imports
 import FLink from "../link/FLink.vue";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
 import { useThemeStore } from "../../stores/theme";
+/*
+  TODO Make Sidebar retractable
+*/
+const themeStore = useThemeStore();
+const { changeTheme } = themeStore;
 
 // State
 

@@ -12,10 +12,15 @@ $element-trans-time: 0.125s;
 
 // ____> Color Palette
 $gray: #fafafa;
-$primary: #42b883;
+$primary: #3697ec;
 $primary-2: #003806;
 $secondary-light: #d5d5d5;
 $secondary-dark: #373737;
+
+// $primary-shadow: rgb(176, 229, 255);
+$primary-shadow: none;
+// $primary-shadow-dark: rgb(20, 50, 103);
+$primary-shadow-dark: none;
 
 $danger: #92304a;
 $important: #005fa7;
@@ -31,10 +36,10 @@ $white-mute: #878787;
 $background-white: white;
 
 $black: #000000;
-$black-soft: #2b2b2b;
+$black-soft: #222222;
 $black-soft2: #3a3a3a;
 $black-mute: #7b7b7b;
-$background-black: #181818;
+$background-black: #131313;
 
 $placeholder-text-light: #a0a0a0;
 $placeholder-text-dark: #797979;
@@ -54,7 +59,7 @@ $color-background: $background-white;
 $color-background-soft: $white-soft;
 $color-background-mute: $white-mute;
 $card-bg-color-light: rgb(240, 240, 240);
-$card-bg-color-dark: #252525;
+$card-bg-color-dark: #1e1e1e;
 
 $color-border-important: $important;
 $color-border: $color-border-light-1;
@@ -89,8 +94,7 @@ $nav-width: 220px;
 $nav-item-width: 80px;
 
 $panel-bg-color-light: rgb(227, 227, 227);
-$panel-bg-color-dark: rgb(40, 40, 40);
-
+$panel-bg-color-dark: rgb(15, 15, 15);
 /* 
   Scrollbar
 */
@@ -136,4 +140,4 @@ $container-bg-color-dark: $card-bg-color-dark;
 $z-top: 1000;
 
 // Posts
-$post-margin-btm: 15px;
+$post-margin-btm: 4px;

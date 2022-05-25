@@ -8,63 +8,52 @@
         <FInput
           type="text"
           label="Fullname"
+          v-model="name"
           placeholder="Full name"
           required
           minlength="3"
-          rounded
-          size="md"
-          ref="myRef"
-        />
-        <FInput
-          type="text"
-          label="Username"
-          placeholder="Display name"
-          required
-          minlength="3"
-          maxlength="20"
-          hasCounter
-          rounded
-          validation-message="Minimum 3 characters and maximum 8 characters."
-          success-message="Username is available!"
-          size="md"
+          ref="signupFirstInput"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
         />
         <FInput
           type="email"
           label="Email"
+          v-model="email"
           placeholder="user@email.com"
           required
           minlength="3"
-          size="md"
-          validation-message="Email should be of correct format."
-          success-message="Valid!"
-          rounded
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
         />
         <FInput
           type="password"
+          v-model="password"
           minlength="3"
           label="Password"
-          rounded
           required
-          size="md"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
         />
         <FInput
           type="password"
+          v-model="confirmPassword"
           minlength="3"
           label="Confirm Password"
           required
-          rounded
-          size="md"
-        />
-        <FInput
-          type="textarea"
-          label="A little bit about you (optional)"
-          rounded
-          scale="y"
-          size="md"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
         />
       </div>
       <div class="buttons">
-        <FButton label="Create Account" size="md" outlined rounded />
+        <FButton
+          label="Create Account"
+          :type="formConfig.buttonType"
+          :size="formConfig.size"
+          :rounded="formConfig.rounded"
+          :outlined="formConfig.buttonOutlined"
+          @click.prevent="submit"
+        />
       </div>
     </form>
   </section>
@@ -74,69 +63,54 @@
 /*
   imports
 */
-import { useThemeStore } from "../stores/theme.js";
-import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
+import formConfig from "@/utils/formConfig.js";
+import processRequest from "@/utils/processRequest.js";
+import { useRouter } from "vue-router";
 import FButton from "../components/button/FButton.vue";
 import FInput from "../components/input/FInput.vue";
 
+const router = useRouter();
+
 // Reactive State
-const themeStore = useThemeStore();
-const { isDark } = storeToRefs(themeStore);
-const myRef = ref(null);
+const signupFirstInput = ref(null);
+const name = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
+
+function submit() {
+  if (password.value === confirmPassword.value) {
+    processRequest("user/", "post", {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    })
+      .then(() => {
+        router.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
 
 // Lifecycle Hooks
 onMounted(() => {
-  myRef.value.input.focus();
+  signupFirstInput.value.input.focus();
 });
-
-// onBeforeRouteLeave((to, from) => {
-//   // TODO
-//   // if all fields are not empty (Composable)
-//   // if all promises are resolved (Composable)
-//   // then:
-//   // show the snackbar component instead of confirm()
-//   const answer = confirm("Are you sure you want to leave?");
-//   if (!answer) return false;
-// });
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
+@import "@/assets/form-styling.scss";
 
 .signup {
-  // margin-top: 15px;
-  // padding: 15px;
-
   width: $global-center-content-width;
 
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-form {
-  width: 100%;
-  .inputs {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    flex-flow: nowrap column;
-
-    .control {
-      margin: 10px 0px;
-    }
-  }
-
-  .buttons {
-    margin-top: 10px;
-    display: flex;
-    flex-flow: nowrap column;
-
-    button {
-      margin: 2px 0px;
-    }
-  }
+  @include form-styling;
 }
 </style>

@@ -1,26 +1,33 @@
 <template>
   <FContainer
     rounded
-    padding="1"
-    maxHeight="500px"
+    maxHeight="900px"
+    transparent
     :heading="heading"
     overflowYAuto
     class="info-card"
     :emptyText="emptyText"
     v-if="tasks"
   >
+    <CreateTask />
     <TaskItem
       class="task"
       v-for="task in tasks"
       :key="task.id"
       :task="task"
+      @click="
+        $router.push({
+          name: `task`,
+          params: { id: task.id, ...task },
+        })
+      "
     ></TaskItem>
   </FContainer>
 
   <FContainer
     rounded
-    padding="1"
     maxHeight="400px"
+    transparent
     :heading="heading"
     overflowYAuto
     class="info-card"
@@ -30,7 +37,7 @@
     <FContainer
       class="task"
       rounded
-      v-for="important in important"
+      v-for="important in importantAnnouncements"
       :key="important.id"
     ></FContainer>
   </FContainer>
@@ -39,6 +46,7 @@
 <script setup>
 import FContainer from "@/components/container/FContainer.vue";
 import TaskItem from "@/components/task/TaskItem.vue";
+import CreateTask from "@/components/task/CreateTask.vue";
 
 defineProps({
   updates: {

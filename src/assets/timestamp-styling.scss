@@ -1,0 +1,9 @@
+@mixin timestamp-styling {
+  .timestamp {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    line-height: 0.4;
+    margin-bottom: $post-margin-btm;
+  }
+}

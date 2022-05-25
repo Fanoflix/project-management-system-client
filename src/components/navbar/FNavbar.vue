@@ -12,20 +12,25 @@
     <div class="nav-item links">
       <FLink type="primary" to="/"> Home </FLink>
 
-      <FLink type="primary" to="/login"> Login </FLink>
+      <FLink type="primary" to="/signup" v-if="!isLoggedIn"> Signup </FLink>
 
-      <FLink type="primary" to="/signup"> Signup </FLink>
+      <FLink type="primary" to="/login" v-if="!isLoggedIn"> Login </FLink>
 
-      <FLink type="secondary" to="/groupDashboard"> Group Dashboard </FLink>
+      <!-- <FLink type="secondary" to="/dashboard" v-if="isLoggedIn">
+        Dashboard
+      </FLink> -->
     </div>
 
     <FButton
       size="sm"
-      label="Theme"
-      type="secondary"
-      @click.prevent="changeTheme"
+      label="Logout"
+      type="danger"
+      v-if="isLoggedIn"
+      caps
+      @click.prevent="logout"
       rounded
     />
+    <div v-else style="width: 80px"></div>
   </section>
 </template>
 
@@ -33,12 +38,23 @@
 import FLink from "../link/FLink.vue";
 import FButton from "../button/FButton.vue";
 import { useThemeStore } from "../../stores/theme.js";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../../stores/user.js";
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 
+const router = useRouter();
+const userStore = useUserStore();
 const themeStore = useThemeStore();
-const { changeTheme } = themeStore;
 const { isDark } = storeToRefs(themeStore); // same thing as the above line
+const { isLoggedIn } = storeToRefs(userStore);
+
+const { logoutUser } = useUserStore();
+
+function logout() {
+  logoutUser();
+  router.push("/");
+}
 
 // Props
 const props = defineProps({
@@ -112,9 +128,9 @@ const navbarClasses = computed(() => {
       height: $nav-height;
       min-width: $nav-item-width;
       &.router-link-active {
-        border-bottom: 1px solid $black;
-        background-color: $secondary-light;
-        color: $black;
+        border-bottom: 1px solid $primary;
+        background-color: $white;
+        color: $primary;
       }
     }
   }

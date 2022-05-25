@@ -18,7 +18,9 @@ import { useThemeStore } from "./stores/theme.js";
 import { onBeforeMount, ref } from "vue";
 import FNavbar from "./components/navbar/FNavbar.vue";
 import FSidebar from "./components/sidebar/FSidebar.vue";
+import { useUserStore } from "@/stores/user.js";
 
+const { setUserInfo } = useUserStore();
 let body = document.querySelector("body");
 const themeStore = useThemeStore();
 const { setIsDark } = themeStore; // same thing as the above line
@@ -30,6 +32,15 @@ onBeforeMount(() => {
   if (storedIsDark) {
     body.classList.add("dark");
     setIsDark(storedIsDark);
+  }
+
+  let isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
+  if (isLoggedIn) {
+    let user = {
+      token: JSON.parse(localStorage.getItem("token")),
+      isLoggedIn: true,
+    };
+    setUserInfo(user);
   }
 });
 
@@ -97,7 +108,7 @@ themeStore.$subscribe((_, state) => {
 .fade-enter-active,
 .fade-leave-active {
   // transition: transform 0.075s linear, opacity 0.1s ease-out;
-  transition: transform 0.12s cubic-bezier(.42,.34,0,1.89),
+  transition: transform 0.12s cubic-bezier(0.42, 0.34, 0, 1.89),
     opacity 0.05s cubic-bezier(0.55, -0.7, 0.66, 1.5);
 }
 </style>
